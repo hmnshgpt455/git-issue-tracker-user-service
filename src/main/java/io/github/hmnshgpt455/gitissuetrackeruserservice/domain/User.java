@@ -8,9 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Getter
@@ -47,23 +45,23 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
 
-    @Column(nullable = false)
+    //When using in memory DB, the column with name organization_id is created
+    //Referenced column is the column that will act as foreign key in Organization entity
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "organization_id", referencedColumnName = "id")
     private Organization organization;
 
     @ManyToMany
     @JoinTable(
             name = "project_user",
-            joinColumns = @JoinColumn(name = "project_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "project_id", referencedColumnName = "id")
     )
-    private List<Project> projects = new ArrayList<>();
+    private Set<Project> projects = new HashSet<>();
 
     public void addProject(Project project) {
         projects.add(project);

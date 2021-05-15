@@ -1,9 +1,9 @@
 package io.github.hmnshgpt455.gitissuetrackeruserservice.repositories;
 
-import io.github.hmnshgpt455.gitissuetrackeruserservice.domain.User;
+import io.github.hmnshgpt455.gitissuetrackeruserservice.domain.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-public interface UserRepository extends JpaRepository<User, UUID> {
+public interface RoleRepository extends JpaRepository<Role, UUID> {
 }

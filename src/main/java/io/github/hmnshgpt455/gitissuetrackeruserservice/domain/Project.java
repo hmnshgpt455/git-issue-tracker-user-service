@@ -27,7 +27,11 @@ public class Project {
     @Column(nullable = false)
     private String projectName;
 
-    @ManyToMany(mappedBy = "projects")
+    @ManyToMany
+    @JoinTable(
+        name = "project_user",
+        joinColumns = @JoinColumn(name = "project_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     private List<User> users = new ArrayList<>();
 
     public void addUser(User user) {
