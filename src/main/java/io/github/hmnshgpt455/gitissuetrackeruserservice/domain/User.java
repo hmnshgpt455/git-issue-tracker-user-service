@@ -48,10 +48,14 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    private String role;
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private Role role;
 
     @Column(nullable = false)
-    private String organization;
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private Organization organization;
 
     @ManyToMany
     @JoinTable(
