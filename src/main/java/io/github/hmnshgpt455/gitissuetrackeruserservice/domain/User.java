@@ -45,9 +45,13 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "id")
-    private Role role;
+    @ManyToMany
+    @JoinTable(
+            name = "project_role",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
+    )
+    private Set<Role> roles = new HashSet<>();
 
     //When using in memory DB, the column with name organization_id is created
     //Referenced column is the column that will act as foreign key in Organization entity

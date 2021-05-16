@@ -1,17 +1,15 @@
 package io.github.hmnshgpt455.common.model;
 
-import io.github.hmnshgpt455.gitissuetrackeruserservice.domain.Organization;
-import io.github.hmnshgpt455.gitissuetrackeruserservice.domain.Project;
-import io.github.hmnshgpt455.gitissuetrackeruserservice.domain.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,7 +19,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO implements Serializable  {
+public class UserDTO extends RepresentationModel<UserDTO> implements Serializable   {
 
     static final long serialVersionUID = -4133151599555050916L;
 
@@ -48,7 +46,7 @@ public class UserDTO implements Serializable  {
     private String email;
 
     @NotNull
-    private RoleDTO role;
+    private Set<RoleDTO> roles = new HashSet<>();
 
     @NotNull
     private OrganizationDTO organization;

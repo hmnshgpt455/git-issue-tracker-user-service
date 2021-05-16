@@ -36,6 +36,8 @@ public class UserBootstrap implements CommandLineRunner {
                     .name("PMO")
                     .build();
             roleRepository.save(role);
+            Set<Role> roles = new HashSet<>();
+            roles.add(role);
             Project project1 = Project.builder()
                     .projectName("VFIT")
                     .build();
@@ -63,7 +65,7 @@ public class UserBootstrap implements CommandLineRunner {
             projects2.add(project3);
             projects2.add(project4);
             userRepository.save(User.builder()
-                    .role(role)
+                    .roles(roles)
                     .organization(organization)
                     .email("ss@ss.com")
                     .firstName("Himanshu")
@@ -73,7 +75,7 @@ public class UserBootstrap implements CommandLineRunner {
                     .build());
 
             User user = userRepository.save(User.builder()
-                    .role(role)
+                    .roles(roles)
                     .organization(organization)
                     .email("bujho@bujho.com")
                     .firstName("Bujho")
