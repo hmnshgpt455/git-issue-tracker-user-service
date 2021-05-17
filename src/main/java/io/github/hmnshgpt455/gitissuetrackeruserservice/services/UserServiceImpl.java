@@ -11,6 +11,7 @@ import io.github.hmnshgpt455.gitissuetrackeruserservice.mapper.UserMapper;
 import io.github.hmnshgpt455.gitissuetrackeruserservice.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -77,5 +78,11 @@ public class UserServiceImpl implements UserService {
         return AvailabilityResponse.builder()
                 .isAvailable(!userRepository.existsByUsername(username))
                 .build();
+    }
+
+    @Override
+    public List<UserDTO> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return users.stream().map(userMapper::userToUserDto).collect(Collectors.toList());
     }
 }

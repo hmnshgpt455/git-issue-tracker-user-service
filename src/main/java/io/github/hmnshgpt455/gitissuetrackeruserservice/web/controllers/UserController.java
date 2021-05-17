@@ -21,8 +21,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1")
 public class UserController {
 
-    private final UserRepository userRepository;
-    private final UserMapper userMapper;
     private final UserService userService;
 
 
@@ -35,10 +33,8 @@ public class UserController {
     @GetMapping(path = "/user", produces = "application/hal+json")
     @ResponseBody
     public CollectionModel<UserDTO> getAllUsers() {
-        List<User> users = userRepository.findAll();
-        CollectionModel<UserDTO> userDtoCollectionModel = CollectionModel
-                .of(users.stream().map(userMapper::userToUserDto).collect(Collectors.toList()));
-        return userDtoCollectionModel;
+        List<UserDTO> userDTOs = userService.getAllUsers();
+        return CollectionModel.of(userDTOs);
     }
 
     @GetMapping("/user/check-availability")
