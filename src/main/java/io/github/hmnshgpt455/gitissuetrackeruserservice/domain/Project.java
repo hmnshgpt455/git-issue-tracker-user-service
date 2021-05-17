@@ -27,7 +27,7 @@ public class Project {
     @Column(length = 36, columnDefinition = "varchar(36)", updatable = false, nullable = false)
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String projectName;
 
     @ManyToMany

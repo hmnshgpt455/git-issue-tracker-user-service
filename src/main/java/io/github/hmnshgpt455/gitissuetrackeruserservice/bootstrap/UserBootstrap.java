@@ -30,7 +30,16 @@ public class UserBootstrap implements CommandLineRunner {
             Organization organization = Organization.builder()
                     .name("Mindtree")
                     .build();
+            Organization organization1 = Organization.builder()
+                    .name("Amdocs")
+                    .build();
+            Organization organization2 = Organization.builder()
+                    .name("Paytm")
+                    .build();
+
             organizationRepository.save(organization);
+            organizationRepository.save(organization1);
+            organizationRepository.save(organization2);
 
             Role role = Role.builder()
                     .name("PMO")

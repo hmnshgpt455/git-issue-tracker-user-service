@@ -35,6 +35,6 @@ public class Role {
     @UpdateTimestamp
     private Timestamp lastModifiedDate;
 
-    @Column(updatable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 }

@@ -27,6 +27,7 @@ public class Organization {
     @Column(length = 36, columnDefinition = "varchar(36)", updatable = false, nullable = false)
     private UUID id;
 
+    @Column(nullable = false, unique = true)
     private String name;
 
     @Version
