@@ -3,15 +3,15 @@ package io.github.hmnshgpt455.gitissuetrackeruserservice.services;
 import io.github.hmnshgpt455.common.model.OrganizationDTO;
 import io.github.hmnshgpt455.common.model.ProjectDTO;
 import io.github.hmnshgpt455.common.model.UserDTO;
-import io.github.hmnshgpt455.common.model.responses.AvailabilityResponse;
+import io.github.hmnshgpt455.common.responses.AvailabilityResponse;
 import io.github.hmnshgpt455.gitissuetrackeruserservice.domain.Project;
 import io.github.hmnshgpt455.gitissuetrackeruserservice.domain.User;
 import io.github.hmnshgpt455.gitissuetrackeruserservice.exception.definitions.InvalidRequest;
 import io.github.hmnshgpt455.gitissuetrackeruserservice.mapper.UserMapper;
 import io.github.hmnshgpt455.gitissuetrackeruserservice.repositories.UserRepository;
+import io.github.hmnshgpt455.gitissuetrackeruserservice.services.authentication.UserAuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.hateoas.CollectionModel;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -28,6 +28,7 @@ public class UserServiceImpl implements UserService {
     private final OrganizationService organizationService;
     private final ProjectService projectService;
     private final UserMapper userMapper;
+    private final UserAuthenticationService userAuthenticationService;
 
     @Override
     public UserDTO saveNewUser(UserDTO userDTO) {
@@ -67,16 +68,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public AvailabilityResponse checkEmailAvailability(String email) {
-        return AvailabilityResponse.builder()
-                .isAvailable(!userRepository.existsByEmail(email))
-                .build();
-    }
-
-    @Override
     public AvailabilityResponse checkUsernameAvailability(String username) {
+        boolean isAvailable = false;
+        if (!userRepository.existsByUsername(username)) {
+            isAvailable = userAuthenticationService.checkUsernameAvailability(username).getIsAvailable();
+        }
         return AvailabilityResponse.builder()
-                .isAvailable(!userRepository.existsByUsername(username))
+                .isAvailable(isAvailable)
                 .build();
     }
 

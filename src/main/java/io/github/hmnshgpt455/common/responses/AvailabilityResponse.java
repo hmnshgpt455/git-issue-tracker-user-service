@@ -1,4 +1,4 @@
-package io.github.hmnshgpt455.common.model.responses;
+package io.github.hmnshgpt455.common.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
