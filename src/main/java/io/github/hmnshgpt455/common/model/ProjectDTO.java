@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.hateoas.RepresentationModel;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.io.Serializable;
@@ -33,5 +34,6 @@ public class ProjectDTO extends RepresentationModel<ProjectDTO> implements Seria
     private OffsetDateTime lastModifiedDate = null;
 
     @NotNull
+    @NotEmpty
     private String projectName;
 }

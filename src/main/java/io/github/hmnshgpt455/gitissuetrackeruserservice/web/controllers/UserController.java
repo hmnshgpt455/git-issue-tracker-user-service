@@ -17,13 +17,13 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping(path = "/user", produces = "application/hal+json")
+    @PostMapping(path = "/user")
     @ResponseBody
     public UserDTO newUser(@RequestBody UserDTO userDTO) {
         return userService.saveNewUser(userDTO);
     }
 
-    @GetMapping(path = "/user", produces = "application/hal+json")
+    @GetMapping(path = "/user")
     @ResponseBody
     public CollectionModel<UserDTO> getAllUsers() {
         List<UserDTO> userDTOs = userService.getAllUsers();

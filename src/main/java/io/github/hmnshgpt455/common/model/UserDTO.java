@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.RepresentationModel;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.io.Serializable;
@@ -36,16 +36,18 @@ public class UserDTO extends RepresentationModel<UserDTO> implements Serializabl
     private OffsetDateTime lastModifiedDate = null;
 
     @NotNull
+    @NotEmpty
     private String firstName;
     private String lastName;
 
     @NotNull
+    @NotEmpty
     private String username;
 
     @NotNull
+    @NotEmpty
     private String email;
 
-    @NotNull
     private Set<RoleDTO> roles = new HashSet<>();
 
     @NotNull
