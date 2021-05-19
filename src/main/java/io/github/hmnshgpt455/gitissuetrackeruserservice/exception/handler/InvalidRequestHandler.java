@@ -1,5 +1,6 @@
 package io.github.hmnshgpt455.gitissuetrackeruserservice.exception.handler;
 
+import io.github.hmnshgpt455.gitissuetrackeruserservice.exception.definitions.InvalidRequest;
 import io.github.hmnshgpt455.gitissuetrackeruserservice.exception.errors.BaseError;
 import io.github.hmnshgpt455.gitissuetrackeruserservice.exception.logger.ErrorLogger;
 import lombok.RequiredArgsConstructor;
@@ -15,25 +16,27 @@ import org.springframework.web.context.request.WebRequest;
 
 @ControllerAdvice
 @RequiredArgsConstructor
-@Order(999)
-public class GenericExceptionHandler {
+@Order(100)
+public class InvalidRequestHandler {
 
-    private static final String INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR";
     private final ErrorLogger eLogger;
     private final ErrorHandlerHelper errorHandlerHelper;
 
-    @ExceptionHandler(RuntimeException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    ResponseEntity<BaseError> handleGenericException(RuntimeException exception, WebRequest request) {
+    private static final String BAD_REQUEST = "BAD_REQUEST";
 
-        BaseError error = errorHandlerHelper.buildErrorObject(BaseError.builder(), INTERNAL_SERVER_ERROR,
-                HttpStatus.INTERNAL_SERVER_ERROR.value(), ((ServletWebRequest) request).getRequest().getRequestURI(),
+    @ExceptionHandler(InvalidRequest.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<BaseError> handleInvalidRequest(InvalidRequest exception, WebRequest request) {
+
+        BaseError error = errorHandlerHelper.buildErrorObject(BaseError.builder(), BAD_REQUEST,
+                HttpStatus.BAD_REQUEST.value(), ((ServletWebRequest) request).getRequest().getRequestURI(),
                 exception.getMessage());
 
-        MultiValueMap<String, String> httpHeaders = errorHandlerHelper.getHttpHeadersMap(INTERNAL_SERVER_ERROR);
+        MultiValueMap<String, String> httpHeaders = errorHandlerHelper.getHttpHeadersMap(BAD_REQUEST);
 
         eLogger.log(error, ((ServletWebRequest)request).getRequest().getRequestURI(), exception, httpHeaders);
 
         return new ResponseEntity<>(error, httpHeaders, HttpStatus.BAD_REQUEST);
     }
+
 }

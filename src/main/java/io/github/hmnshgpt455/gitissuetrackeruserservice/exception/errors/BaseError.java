@@ -1,19 +1,20 @@
 package io.github.hmnshgpt455.gitissuetrackeruserservice.exception.errors;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.time.OffsetDateTime;
 
-@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GenericError {
-
-    private String message;
-    private Integer status;
+@SuperBuilder
+public class BaseError {
+    private Integer statusCode;
+    private String errorMessage;
+    private String errorCode;
+    private String requestUri;
     private OffsetDateTime timestamp;
 }
